@@ -1,0 +1,25 @@
+{
+  "name": "elementary-db",
+  "author": "MrShoe_",
+  "version": "0.2.0",
+  "main": "index.js",
+  "dependencies": {
+    "fs": "^0.0.1-security"
+  },
+  "description": "A basic json db",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/MrShoeShoe66/elementary-db.git"
+  },
+  "keywords": [
+    "elementary-db",
+    "db",
+    "database"
+  ],
+  "bugs": {
+    "url": "https://github.com/MrShoeShoe66/elementary-db/issues"
+  }
+}
