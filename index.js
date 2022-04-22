@@ -1,12 +1,9 @@
 const fs = require('fs')
 
-async function checkFile(filename) {
-  try {
-    await fs.access(path)
-    return true
-  } catch {
-    return false
-  }
+function checkFile(filename) {
+  fs.exists('/etc/passwd', (e) => {
+    return e
+  })
 }
 
 function getContent(filename) {
@@ -19,7 +16,15 @@ function getContent(filename) {
 }
 
 function createFile(filename) {
-  fs.writeFile(filename, {}, 'utf8', (err) => {
+  fs.writeFile(filename, JSON.stringify({}), 'utf8', (err) => {
+    if (err) {
+      console.log(err)
+    }
+  })
+}
+
+function saveConfig(filename, config) {
+  fs.writeFile(filename, config, 'utf8', (err) => {
     if (err) {
       console.log(err)
     }
@@ -35,22 +40,42 @@ class Database {
       this.content = {}
       createFile(this.filename)
     }
-  }
-
-  saveToDisk() {
-    try {
-      fs.writeFileSync(this.filename, JSON.stringify(this.content))
-    } catch (err) {
-      console.error(err)
+    
+    this.config = {
+      'autosave': true,
+      'saveConfig': false,
+      'configFile': 'elementary-db.config'
     }
   }
 
+  configure(configValue, newConfig) {
+    this.config[JSON.stringify(configValue)] = newConfig
+    if (this.config['saveConfig'] === true) {
+      saveConfig(this.config['configFile'], this.config)
+    }
+  }
+  
+  save() {
+    fs.writeFile(this.filename, JSON.stringify(this.content), (err) => {
+      if (err) {
+        console.log(err)
+      }
+    })
+
+  }
+
+  endFunc() {
+    if (this.config['autosave'] === true) {
+      this.save()
+    }
+  }
+  
   keys() {
     return Object.keys(this.content)
   }
 
   has(key) {
-    if (key in this.keys()) {
+    if (this.keys().includes(String(key))) {
       return true
     } else {
       return false
@@ -58,31 +83,17 @@ class Database {
   }
 
   get(key) {
-    if (this.has(key)) {
-      return this.content[key]
-    } else {
-      return undefined
-    }
+    return this.content[String(key)]
   }
 
   set(key, content) {
-    this.content[key] = content
+    this.content[String(key)] = content
+    this.endFunc()
   }
 
   del(key) {
-    if (key in this.keys()) {
-      this.content[key] = undefined
-    } else {
-      throw `Key of '${key}' was not found`
-    }
-  }
-
-  JSON(content = {"": ""}) {
-    if (content === {"": ""}) {
-      return this.content
-    } else {
-      this.content = content
-    } 
+    delete this.content[String(key)]
+    this.endFunc()
   }
 }
 

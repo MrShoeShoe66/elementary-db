@@ -1,12 +1,12 @@
 {
   "name": "elementary-db",
   "author": "MrShoe_",
-  "version": "0.2.0",
+  "version": "1.0.0",
   "main": "index.js",
   "dependencies": {
     "fs": "^0.0.1-security"
   },
-  "description": "A basic json db",
+  "description": "A basic json database",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
