@@ -14,11 +14,18 @@ npm install elementary-db
 
 ## Setup
 
-Here is a sammple start
+To setup use the following
 
 ```js
-const initDatabase = require('elementary-db');
-const db = initDatabase('database.json');
+const Database = require('elementary-db');
+const db = new Database('database.json');
+```
+
+Or you can do this
+
+```js
+const Database = require('elementary-db');
+const db = Database.init('database.json');
 ```
 
 ## Config
@@ -86,3 +93,49 @@ db.save()
 ```
 
 **NOTE**: You don't need to use this command unless you set 'autosave' to false
+
+### Get or set all data
+
+To get all data use `.getAll`
+
+```js
+db.getAll()
+```
+
+To setall data use `.setAll`
+
+```js
+db.setAll(newJsonData)
+```
+
+## Other
+
+### Change file
+
+To switch database files use this
+
+```js
+db.save()
+
+db.setFile('newFile.json')
+
+db.setAll(
+    Database.getFile('newFile.json')
+)
+
+db.save()
+```
+
+### Just change file to save
+
+```js
+db.save()
+
+db.setFile('newFile.json')
+```
+
+### Read file content
+
+```js
+Database.getFile('file.json')
+```

@@ -48,6 +48,10 @@ class Database {
     }
   }
 
+  setFile(newFilename) {
+    this.filename = newFilename
+  }
+  
   configure(configValue, newConfig) {
     this.config[JSON.stringify(configValue)] = newConfig
     if (this.config['saveConfig'] === true) {
@@ -95,10 +99,22 @@ class Database {
     delete this.content[String(key)]
     this.endFunc()
   }
+
+  getAll() {
+    return this.content
+  }
+
+  setAll(data) {
+    this.content = data
+  }
 }
 
 function initDatabase(filename) {
   return new Database(filename)
 }
 
-module.exports = initDatabase
+module.exports = Database
+
+module.exports.init = initDatabase
+
+module.exports.getFile = getContent

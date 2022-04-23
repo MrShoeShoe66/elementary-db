@@ -1,14 +1,15 @@
 {
   "name": "elementary-db",
+  "description": "A basic json database",
   "author": "MrShoe_",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "index.js",
+  "license": "MIT",
   "dependencies": {
     "fs": "^0.0.1-security"
   },
-  "description": "A basic json database",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "echo ERROR: This is a package! Not a project! && exit 1"
   },
   "repository": {
     "type": "git",
