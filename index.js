@@ -1,11 +1,5 @@
 const fs = require('fs')
 
-function checkFile(filename) {
-  fs.exists('/etc/passwd', (e) => {
-    return e
-  })
-}
-
 function getContent(filename) {
   const file = fs.readFileSync(filename, 'utf8');
   const formatedFile = file
@@ -13,14 +7,6 @@ function getContent(filename) {
     .replace(/}{/g, '},{');
   const fileJson = JSON.parse(formatedFile)
   return fileJson
-}
-
-function createFile(filename) {
-  fs.writeFile(filename, JSON.stringify({}), 'utf8', (err) => {
-    if (err) {
-      console.log(err)
-    }
-  })
 }
 
 function saveConfig(filename, config) {
@@ -34,11 +20,12 @@ function saveConfig(filename, config) {
 class Database {
   constructor(filename) {
     this.filename = filename
-    if (checkFile(this.filename)) {
+    
+    try {
       this.content = getContent(this.filename)
-    } else {
+    } catch {
       this.content = {}
-      createFile(this.filename)
+      this.save()
     }
     
     this.config = {
