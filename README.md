@@ -2,6 +2,15 @@
 
 A baisc json database system for Node.js
 
+## Other database types
+
+Other database system supported:
+
+ - Array Database
+    - line 152
+ - Remote Database
+    - line 228 (WIP)
+
 # Install
 
 use this command to install
@@ -139,3 +148,83 @@ db.setFile('newFile.json')
 ```js
 Database.getFile('file.json')
 ```
+
+# Array 
+
+Create array
+
+```js
+const dbArray = Database.array('arrayDatabase.json')
+```
+
+## Set Value
+
+```js
+dbArray.set(indexValue, value)
+```
+
+## Get Value
+
+```js
+dbArray.get(indexValue)
+```
+
+## Push Value
+
+```js
+dbArray.push(value)
+```
+
+## Find Value
+
+```js
+dbArray.find(callback)
+```
+
+## Compare
+
+```js
+// Setup
+
+const dbArray = Database.array('arrayDatabase.json')
+
+/// vs
+
+const normalArray = []
+
+// Set value
+
+dbArray.set(indexValue, value)
+
+/// vs
+
+normalArray[indexValue] = value
+
+// Get value
+
+dbArray.get(indexValue)
+
+/// vs
+
+normalArray[indexValue]
+
+// Push Value
+
+dbArray.push(value)
+
+/// vs
+
+normalArray.push(value)
+
+// Find Value
+
+dbArray.find(callback)
+
+/// vs
+
+normalArray.find(callback)
+```
+
+# Remote
+
+Coming soon :D
