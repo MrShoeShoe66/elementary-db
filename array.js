@@ -2,7 +2,7 @@ const { Database } = require('./base')
 
 class arrayDatabase {
     constructor(filename) {
-        this.db = Database(filename)
+        this.db = new Database(filename)
         if (!this.db.has('data')) {
             this.db.set('data', [])
         }

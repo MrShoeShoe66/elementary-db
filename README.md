@@ -154,7 +154,7 @@ Database.getFile('file.json')
 Create array
 
 ```js
-const dbArray = Database.array('arrayDatabase.json')
+const dbArray = new Database.array('arrayDatabase.json')
 ```
 
 ## Set Value
@@ -186,7 +186,7 @@ dbArray.find(callback)
 ```js
 // Setup
 
-const dbArray = Database.array('arrayDatabase.json')
+const dbArray = new Database.array('arrayDatabase.json')
 
 /// vs
 
