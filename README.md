@@ -2,6 +2,16 @@
 
 A baisc json database system for Node.js
 
+# NOTE!
+
+After update V2.0.0 .json files are no longer suported! To update an old .json file to a new .edb file, use the following command
+
+```js
+Database.convertToNew(filename)
+```
+
+It will create a new file with the same name but with the .edb file extention insted of the .json file extention
+
 ## Other database types
 
 Other database system supported:
@@ -9,7 +19,7 @@ Other database system supported:
  - Array Database
     - line 152
  - Remote Database
-    - line 228 (WIP)
+    - line 206 (WIP)
 
 # Install
 
@@ -27,14 +37,14 @@ To setup use the following
 
 ```js
 const Database = require('elementary-db');
-const db = new Database('database.json');
+const db = new Database('database');
 ```
 
 Or you can do this
 
 ```js
 const Database = require('elementary-db');
-const db = Database.init('database.json');
+const db = Database.init('database');
 ```
 
 ## Config
@@ -117,44 +127,12 @@ To setall data use `.setAll`
 db.setAll(newJsonData)
 ```
 
-## Other
-
-### Change file
-
-To switch database files use this
-
-```js
-db.save()
-
-db.setFile('newFile.json')
-
-db.setAll(
-    Database.getFile('newFile.json')
-)
-
-db.save()
-```
-
-### Just change file to save
-
-```js
-db.save()
-
-db.setFile('newFile.json')
-```
-
-### Read file content
-
-```js
-Database.getFile('file.json')
-```
-
 # Array 
 
 Create array
 
 ```js
-const dbArray = new Database.array('arrayDatabase.json')
+const dbArray = new Database.array('arrayDatabase')
 ```
 
 ## Set Value
@@ -186,7 +164,7 @@ dbArray.find(callback)
 ```js
 // Setup
 
-const dbArray = new Database.array('arrayDatabase.json')
+const dbArray = new Database.array('arrayDatabase')
 
 /// vs
 

@@ -1,37 +1,25 @@
 const fs = require('fs')
-
-function getContent(filename) {
-  const file = fs.readFileSync(filename, 'utf8');
-  const formatedFile = file
-    .replace(/(\r\n\t|\n|\r\t)/gm,'')
-    .replace(/}{/g, '},{');
-  const fileJson = JSON.parse(formatedFile)
-  return fileJson
-}
-
-function saveConfig(filename, config) {
-  fs.writeFile(filename, config, 'utf8', (err) => {
-    if (err) {
-      console.log(err)
-    }
-  })
-}
+const fileFormat = require('./fileFormat')
+const edbConfig = require('./edb')
 
 class Database {
-  constructor(filename) {
-    this.filename = filename
-    
+  constructor(filename, useOld) {
+    this.filename = filename + edbConfig.extenion
     try {
-      this.content = getContent(this.filename)
+      const file = fileFormat.read(this.filename, useOld)
+      this.content = file['data']
+      this.config = file['config']
+      if (this.config = undefined) {
+        this.config = {
+          'autosave': true
+        }
+      }
     } catch {
       this.content = {}
       this.save()
-    }
-    
-    this.config = {
-      'autosave': true,
-      'saveConfig': false,
-      'configFile': 'elementary-db.config'
+      this.config = {
+        'autosave': true
+      }
     }
   }
 
@@ -41,15 +29,13 @@ class Database {
   
   configure(configValue, newConfig) {
     this.config[JSON.stringify(configValue)] = newConfig
-    if (this.config['saveConfig'] === true) {
-      saveConfig(this.config['configFile'], this.config)
-    }
   }
   
   save() {
-    fs.writeFile(this.filename, JSON.stringify(this.content), (err) => {
+    const data = fileFormat.gen(this.content, this.config)
+    fs.writeFile(this.filename, JSON.stringify(data), (err) => {
       if (err) {
-        console.log(err)
+        process.stdout.write(err)
       }
     })
 
@@ -97,6 +83,5 @@ class Database {
 }
 
 module.exports = {
-    Database,
-    getContent
+    Database
 }
