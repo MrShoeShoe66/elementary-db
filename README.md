@@ -12,15 +12,6 @@ Database.convertToNew(filename)
 
 It will create a new file with the same name but with the .edb file extention insted of the .json file extention
 
-## Other database types
-
-Other database system supported:
-
- - Array Database
-    - line 152
- - Remote Database
-    - line 206 (WIP)
-
 # Install
 
 use this command to install
@@ -129,79 +120,19 @@ db.setAll(newJsonData)
 
 # Array 
 
-Create array
+Unfortunetly We are no longer suporting the array database format, sorry for the inconvenionce to those using this format, we have provided a aternative method for similar results bellow this message
 
 ```js
-const dbArray = new Database.array('arrayDatabase')
+const Backup = new Database('database')
+if (Backup.has('data')) {
+   const array = Backup.get('data')
+} else {
+   Backup.set('data', [])
+   const array = Backup.get('data')
+}
 ```
 
-## Set Value
-
-```js
-dbArray.set(indexValue, value)
-```
-
-## Get Value
-
-```js
-dbArray.get(indexValue)
-```
-
-## Push Value
-
-```js
-dbArray.push(value)
-```
-
-## Find Value
-
-```js
-dbArray.find(callback)
-```
-
-## Compare
-
-```js
-// Setup
-
-const dbArray = new Database.array('arrayDatabase')
-
-/// vs
-
-const normalArray = []
-
-// Set value
-
-dbArray.set(indexValue, value)
-
-/// vs
-
-normalArray[indexValue] = value
-
-// Get value
-
-dbArray.get(indexValue)
-
-/// vs
-
-normalArray[indexValue]
-
-// Push Value
-
-dbArray.push(value)
-
-/// vs
-
-normalArray.push(value)
-
-// Find Value
-
-dbArray.find(callback)
-
-/// vs
-
-normalArray.find(callback)
-```
+Again, sorry for the inconvenience. 
 
 # Remote
 

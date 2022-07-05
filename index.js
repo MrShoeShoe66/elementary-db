@@ -15,30 +15,6 @@ function initDatabase(filename) {
 module.exports = Database
 module.exports.init = initDatabase
 
-// Import Array Database 
-
-const {
-  arrayDatabase
-} = require('./array')
-
-// Export Array Database
-
-module.exports.array = arrayDatabase
-
-// Import Remote 
-
-const {
-  remoteClient,
-  remoteServer,
-  verifyServer
-} = require('./remote')
-
-// Export Remote
-
-module.exports.remote = remoteClient
-module.exports.remote.server = remoteServer
-module.exports.remote.verify = verifyServer
-
 // Convert Data
 
 const fileFormat = require('./fileFormat')

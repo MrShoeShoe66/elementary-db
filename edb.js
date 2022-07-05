@@ -1,3 +1,3 @@
 module.exports              =       {}
-module.exports.version      =       'v2.0.0'
+module.exports.version      =       'v2.0.3'
 module.exports.extenion     =       '.edb'
