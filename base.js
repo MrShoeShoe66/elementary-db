@@ -1,24 +1,39 @@
 const fs = require('fs')
+
 const fileFormat = require('./fileFormat')
 const edbConfig = require('./edb')
+const encryption = require('./encryption')
 
 class Database {
-  constructor(filename, useOld) {
+  constructor(filename, settings) {
     this.filename = filename + edbConfig.extenion
+    this.key = settings['encryptedKey']
     try {
-      const file = fileFormat.read(this.filename, useOld)
-      this.content = file['data']
+      const file = fileFormat.read(this.filename, settings['useOld'])
+      if (settings['encrypted']) {
+        this.content = JSON.parse(
+          encryption.decrypt(
+            file.data,
+            this.key
+          )
+        )
+      } else {
+        this.content = file['data']
+      }
       this.config = file['config']
-      if (this.config = undefined) {
+      if (this.config === undefined) {
         this.config = {
-          'autosave': true
-        }
+          'autosave': true,
+          'dontsave': false,
+          'encrypted': false
+        } 
       }
     } catch {
       this.content = {}
-      this.save()
       this.config = {
-        'autosave': true
+        'autosave': true,
+        'dontsave': false,
+        'encrypted': false
       }
     }
   }
@@ -26,27 +41,49 @@ class Database {
   setFile(newFilename) {
     this.filename = newFilename
   }
-  
-  configure(configValue, newConfig) {
-    this.config[JSON.stringify(configValue)] = newConfig
-  }
-  
-  save() {
-    const data = fileFormat.gen(this.content, this.config)
-    fs.writeFile(this.filename, JSON.stringify(data), (err) => {
-      if (err) {
-        process.stdout.write(err)
-      }
-    })
 
+  configure(configValue, newConfig) {
+    this.config[configValue] = newConfig
+  }
+
+  save() {
+    if (this.config['dontsave'] === true) {
+      fs.exists(this.filename, (exists) => {
+        if (exists) {
+          fs.unlinkSync(this.filename)
+        }
+      })
+      return
+    }
+    var data = fileFormat.gen(
+      this.content,
+      this.config
+    )
+    if (this.config['encrypted']) {
+      data = fileFormat.gen(
+        encryption.encrypt(
+          JSON.stringify(this.content),
+          this.key
+        ),
+        this.config
+      )
+    }
+    fs.writeFile(
+      this.filename,
+      JSON.stringify(data),
+      (err) => {
+        if (err) {
+          process.stdout.write(err)
+        }
+    })
   }
 
   endFunc() {
-    if (this.config['autosave'] === true) {
+    if (this.config['autosave']) {
       this.save()
     }
   }
-  
+
   keys() {
     return Object.keys(this.content)
   }
@@ -83,5 +120,5 @@ class Database {
 }
 
 module.exports = {
-    Database
+  Database
 }

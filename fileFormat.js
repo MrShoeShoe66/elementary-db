@@ -11,7 +11,7 @@ function getContent(filename) {
   }
 
 const loadFile = (filename, useOld = false) => {
-  const content = getContent(`./${filename}.edb`)
+  const content = getContent(`./${filename}`)
   if  (edbConfig.version === content['version']) {
     return {
       data: content['data'],

@@ -1,16 +1,6 @@
-# elementary-db, A simple json database
+# elementary-db, A not so basic json database
 
 A baisc json database system for Node.js
-
-# NOTE!
-
-After update V2.0.0 .json files are no longer suported! To update an old .json file to a new .edb file, use the following command
-
-```js
-Database.convertToNew(filename)
-```
-
-It will create a new file with the same name but with the .edb file extention insted of the .json file extention
 
 # Install
 
@@ -38,6 +28,15 @@ const Database = require('elementary-db');
 const db = Database.init('database');
 ```
 
+And note use this to init a database that suports old files
+
+```js
+const Database = require('elementary-db');
+const db = new Database('database', {
+  "useOld": true
+});
+```
+
 ## Config
 
 To set any config use the `.configure` function
@@ -49,6 +48,21 @@ Set autosave to false use this command
 ```js
 db.configure('autosave', false)
 ```
+
+### All Config Settings
+
+ - AutoSave
+   - Save a project to disk after evey change
+   - Value Type: True/False
+   - Default Value: True
+   - Setting value: 'autosave'
+ - DontSave
+   - Disable The ability to save to the drive, only load a file but dont save to it
+   - Value Type: True/False
+   - Default Value: False
+   - Setting value: 'dontsave'
+
+Info about data encryption is found at line 155
 
 **NOTE**: More configuration will be avalible in a latter update! Check back soon!
 
@@ -118,6 +132,10 @@ To setall data use `.setAll`
 db.setAll(newJsonData)
 ```
 
+## Convert from .json to .edb
+
+use this function to convert a .json file to the newest version of an .edb version
+
 # Array 
 
 Unfortunetly We are no longer suporting the array database format, sorry for the inconvenionce to those using this format, we have provided a aternative method for similar results bellow this message
@@ -134,6 +152,28 @@ if (Backup.has('data')) {
 
 Again, sorry for the inconvenience. 
 
+# Encryption
+
+To inetalise a encrypted database use this using this to setup the database object
+
+```js
+const Database = require('elementary-db');
+const db = new Database('database', {
+  "encrypted": true,
+  "encryptedKey": 'encryption key'
+});
+```
+
+Then the database will work like normal, now the database just has an extra layer of protection
+
+And as a side note, we HIGHLY recomend you turn off autosave if you have this enabled, it is on by default but the automatic saving to the disk can slow down other processes 
+
+### IMPORTANT NOTE:
+
+The key MUST be at least 256 bits long or 32 charicters long as a minimum, but if you are very worryed about your user data and or procecsing time, we would recomend you encrypt and decrypt your own private data or use both for an extra player of protection
+
 # Remote
 
 Coming soon :D
+
+if you want to help develop it, visit the  [./remote.js](./remote.js) file
