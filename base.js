@@ -7,7 +7,9 @@ const encryption = require('./encryption')
 class Database {
   constructor(filename, settings) {
     this.filename = filename + edbConfig.extenion
-    this.key = settings['encryptedKey']
+    try {
+      this.key = settings['encryptedKey']
+    } catch {}
     try {
       const file = fileFormat.read(this.filename, settings['useOld'])
       if (settings['encrypted']) {
