@@ -91,11 +91,7 @@ class Database {
   }
 
   has(key) {
-    if (this.keys().includes(String(key))) {
-      return true
-    } else {
-      return false
-    }
+    return this.keys().includes(String(key))
   }
 
   get(key) {
@@ -105,11 +101,13 @@ class Database {
   set(key, content) {
     this.content[String(key)] = content
     this.endFunc()
+    return this.get(key)
   }
 
   del(key) {
     delete this.content[String(key)]
     this.endFunc()
+    return !this.has(key)
   }
 
   getAll() {
@@ -118,6 +116,11 @@ class Database {
 
   setAll(data) {
     this.content = data
+    return this.getAll()
+  }
+
+  getConfig(value) {
+    return this.config[value]
   }
 }
 

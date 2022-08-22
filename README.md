@@ -1,6 +1,8 @@
 # elementary-db, A not so basic json database
 
-A baisc json database system for Node.js
+A not so baisc json database system for Node.js including a method for [Encryption](./README.md:169), and a system for a [Remote](./README.md:197) Database using a simple key and value pair system with an easy to use functionality for the end user and developer
+
+Developed By [MrShoe_](https://github.com/MrShoeShoe66/)
 
 # Install
 
@@ -62,7 +64,13 @@ db.configure('autosave', false)
    - Default Value: False
    - Setting value: 'dontsave'
 
-Info about data encryption is found at line 155
+Info about data encryption is found at line [163](./README.md:157)
+
+#### Get Current Config
+
+```js
+db.getConfig("Config-Value")
+```
 
 **NOTE**: More configuration will be avalible in a latter update! Check back soon!
 
@@ -136,6 +144,12 @@ db.setAll(newJsonData)
 
 use this function to convert a .json file to the newest version of an .edb version
 
+```js
+Database.convertToNew('file.json')
+```
+
+then in your database just input the name, "file"
+
 # Array 
 
 Unfortunetly We are no longer suporting the array database format, sorry for the inconvenionce to those using this format, we have provided a aternative method for similar results bellow this message
@@ -172,8 +186,54 @@ And as a side note, we HIGHLY recomend you turn off autosave if you have this en
 
 The key MUST be at least 256 bits long or 32 charicters long as a minimum, but if you are very worryed about your user data and or procecsing time, we would recomend you encrypt and decrypt your own private data or use both for an extra player of protection
 
+Example code: ;wch)xTdO0!@Ccv6mxwC8r3cyJmvV-x}
+
+Codes can also not contain the charicter "\" or "/"
+
 # Remote
 
-Coming soon :D
+IMPORTANT NOTICE: The remote feture is a beta feture and is still in development, so some parts may be broken and not work on ocations, to report any bugs, got to the github isuse tab, [HERE](https://github.com/MrShoeShoe66/elementary-db/issues) or send an email to [mrshoeshoe66@gmail.com](mailto:mrshoeshoe66@gmail.com)
 
-if you want to help develop it, visit the  [./remote.js](./remote.js) file
+## Usage
+
+### Client
+
+Here is how to create a connection to a server
+
+```js
+const Database = require('elementary-db')
+
+const server = new Database.remote('<SERVER-IP>')
+```
+
+Then after that the database works almost the same, the only change is that all the all the functions are now asynchronous and will have a small delay in the value return as it needs to return a promies object to allow time for the request to be sent to the server
+
+### Server 
+
+Creating a server is the easy part, here is how you do it
+
+```js
+const Database = require('elementary-db')
+
+const server = new Database.remote.server()
+```
+
+And to start the server simply use this command
+
+```js
+server.start()
+```
+
+After the server starts an output similar to this
+
+```shell
+elementary-db database server running at ip of: 127.0.0.1
+```
+
+and the ip is used to connect to the server from the client
+
+### Errors & Logs
+
+If there is an error, details wil apear in the edblogs.txt file, client and server side
+
+but on the server if anything happens, like a connection from a client or an error, it will also show up in the edblogs.txt file with timestamps of when it happened

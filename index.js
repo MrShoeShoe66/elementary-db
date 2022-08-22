@@ -40,3 +40,6 @@ module.exports.convertToNew = (filename) => {
   })
 }
 
+// Remote Database
+
+module.exports.remote = require('./remote')

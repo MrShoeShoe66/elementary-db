@@ -1,6 +1,6 @@
 const crypto = require('crypto');
 
-const IV_LENGTH = 16; // For AES, this is always 16
+const IV_LENGTH = 16
 
 function encrypt(text, ENCRYPTION_KEY) {
  let iv = crypto.randomBytes(IV_LENGTH);
