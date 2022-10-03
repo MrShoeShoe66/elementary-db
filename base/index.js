@@ -1,8 +1,9 @@
 const fs = require('fs')
+const util = require('util');
 
-const fileFormat = require('./fileFormat')
-const edbConfig = require('./edb')
-const encryption = require('./encryption')
+const fileFormat = require('#tools/fileFormat')
+const edbConfig = require('../edb')
+const encryption = require('#tools/encryption')
 
 class Database {
   constructor(filename, settings) {
@@ -121,6 +122,14 @@ class Database {
 
   getConfig(value) {
     return this.config[value]
+  }
+
+  [util.inspect.custom]() {
+    return 'This is local elementary-db Database object'
+  }
+
+  debugPrint() {
+    console.table(this)
   }
 }
 

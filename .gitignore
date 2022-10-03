@@ -1,7 +1,5 @@
 # Ignore files for testing
 *.edb
-test.js
-client.js
-server.js
+testing/
 todo.txt
 edblogs.txt

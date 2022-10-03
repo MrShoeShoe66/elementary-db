@@ -1,8 +1,10 @@
 # elementary-db, A not so basic json database
 
-A not so baisc json database system for Node.js including a method for [Encryption](./README.md:169), and a system for a [Remote](./README.md:197) Database using a simple key and value pair system with an easy to use functionality for the end user and developer
+A not so baisc json database system for Node.js including a method for Encryption, and a system for a Remote Database using a simple key and value pair system with an easy to use functionality for the end user and developer
 
 Developed By [MrShoe_](https://github.com/MrShoeShoe66/)
+
+VERSION: v3.1.0
 
 # Install
 
@@ -64,7 +66,7 @@ db.configure('autosave', false)
    - Default Value: False
    - Setting value: 'dontsave'
 
-Info about data encryption is found at line [163](./README.md:157)
+Info about data encryption is found at line 163
 
 #### Get Current Config
 
@@ -203,10 +205,24 @@ Here is how to create a connection to a server
 ```js
 const Database = require('elementary-db')
 
-const server = new Database.remote('<SERVER-IP>')
+const server = new Database.remote('<SERVER-IP>', { Settings })
 ```
 
 Then after that the database works almost the same, the only change is that all the all the functions are now asynchronous and will have a small delay in the value return as it needs to return a promies object to allow time for the request to be sent to the server
+
+#### Settings
+
+The settingns is used to dictate if the server is secured or not
+
+Example:
+
+```js
+const Database = require('elementary-db')
+
+const server = new Database.remote('<SERVER-IP>', { secure: true })
+```
+
+And as a note, it's considered secured here when its through https trafic instead of http trafic, and it can either be secured through the package itself or through another routeing softwhere! Just thought I should clarify 
 
 ### Server 
 
@@ -224,6 +240,12 @@ And to start the server simply use this command
 server.start()
 ```
 
+But make sure to initiate the server with this first
+
+```js
+server.createServer()
+```
+
 After the server starts an output similar to this
 
 ```shell
@@ -231,6 +253,16 @@ elementary-db database server running at ip of: 127.0.0.1
 ```
 
 and the ip is used to connect to the server from the client
+
+#### Make it secure!
+
+I would recomend forwarding it through Nginx, but if you would rather do it through the package, use this instead:
+
+```js
+server.createServerSecure( keyfilepath, certfilepath )
+```
+
+where to 2 inputs are the path to the certifacate files
 
 ### Errors & Logs
 

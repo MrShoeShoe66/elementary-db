@@ -2,7 +2,7 @@
 
 const {
   Database
-} = require('./base')
+} = require('#base/index')
 
 // INIT Database Function
 
@@ -17,7 +17,7 @@ module.exports.init = initDatabase
 
 // Convert Data
 
-const fileFormat = require('./fileFormat')
+const fileFormat = require('#tools/fileFormat')
 const fs = require('fs')
 
 function getContent(filename) {
@@ -42,4 +42,4 @@ module.exports.convertToNew = (filename) => {
 
 // Remote Database
 
-module.exports.remote = require('./remote')
+module.exports.remote = require('#remote/index')
