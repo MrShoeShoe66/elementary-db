@@ -1,7 +1,7 @@
-const { networkInterfaces } = require('os');
+const { networkInterfaces } = require('os')
 
 module.exports = function (name, family) {
-  const nets = networkInterfaces();
+  const nets = networkInterfaces()
   const results = {}
   
   for (const name of Object.keys(nets)) {
@@ -10,7 +10,7 @@ module.exports = function (name, family) {
               if (!results[name]) {
                   results[name] = [];
               }
-              results[name].push(net.address);
+              results[name].push(net.address)
           }
       }
   }

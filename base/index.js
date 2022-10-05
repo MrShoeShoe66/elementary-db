@@ -1,5 +1,5 @@
 const fs = require('fs')
-const util = require('util');
+const util = require('util')
 
 const fileFormat = require('#tools/fileFormat')
 const edbConfig = require('../edb')

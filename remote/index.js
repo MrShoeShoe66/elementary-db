@@ -8,8 +8,8 @@
 
 const http = require('http')
 const https = require('https')
-const util = require('util');
-const fs = require('fs');
+const util = require('util')
+const fs = require('fs')
 
 const { Database } = require('#base/index')
 const IP = require('#tools/ip')
@@ -35,7 +35,20 @@ class RemoteServer {
       req.on('data', function(chunk) {
         var body = JSON.parse(chunk)
         logs.append('Recieved data from: ' + req.connection.remoteAddress + ' with data: ' + JSON.stringify(body) + ' at timestamp of: ' + Date.now() + " with the type: " + body['type'])
+        if (!this.handlePassword(body.pass)) {
+          logs.append(req.connection.remoteAddress + 'tryed to accsess the server with an incorenct password')
+          res.writeHead(200)
+          res.write(JSON.stringify({
+            error: "Incorect Password",
+            meta: {
+              version: edb.remote.server.version,
+              offical: edb.remote.server.offical
+            }
+          }))
+          res.end()
+        }
         if (body.type === 'online') {
+          res.writeHead(200)
           res.write(JSON.stringify({
             type: "online",
             'data': true,
@@ -45,6 +58,7 @@ class RemoteServer {
             }
           }))
         } else if (body.type === 'get') {
+          res.writeHead(200)
           res.write(JSON.stringify({
             type: "get",
             'data': db.get(body.key),
@@ -54,6 +68,7 @@ class RemoteServer {
             }
           }))
         } else if (body.type === 'set') {
+          res.writeHead(200)
           res.write(JSON.stringify({
             type: "set",
             'data': db.set(body.key, body.value),
@@ -63,6 +78,7 @@ class RemoteServer {
             }
           }))
         } else if (body.type === 'delete') {
+          res.writeHead(200)
           res.write(JSON.stringify({
             type: "delete",
             'data': db.del(body.value),
@@ -72,6 +88,7 @@ class RemoteServer {
             }
           }))
         } else if (body.type === 'has') {
+          res.writeHead(200)
           res.write(JSON.stringify({
             type: "has",
             'data': db.has(body.value),
@@ -81,6 +98,7 @@ class RemoteServer {
             }
           }))
         } else if (body.type === 'keys') {
+          res.writeHead(200)
           res.write(JSON.stringify({
             type: "keys",
             'data': db.keys(),
@@ -90,6 +108,7 @@ class RemoteServer {
             }
           }))
         } else if (body.type === 'getAll') {
+          res.writeHead(200)
           res.write(JSON.stringify({
             type: "getAll",
             'data': db.getAll(),
@@ -99,9 +118,20 @@ class RemoteServer {
             }
           }))
         } else if (body.type === 'setAll') {
+          res.writeHead(200)
           db.setAll(body.value)
           res.write(JSON.stringify({
             type: "setAll",
+            'data': {},
+            meta: {
+              version: edb.remote.server.version,
+              offical: edb.remote.server.offical
+            }
+          }))
+        } else {
+          res.writeHead(404)
+          res.write(JSON.stringify({
+            type: "unknown",
             'data': {},
             meta: {
               version: edb.remote.server.version,
@@ -134,7 +164,20 @@ class RemoteServer {
       req.on('data', function(chunk) {
         var body = JSON.parse(chunk)
         logs.append('Recieved data from: ' + req.connection.remoteAddress + ' with data: ' + JSON.stringify(body) + ' at timestamp of: ' + Date.now() + " with the type: " + body['type'])
+        if (!this.handlePassword(body.pass)) {
+          logs.append(req.connection.remoteAddress + 'tryed to accsess the server with an incorenct password')
+          res.writeHead(200)
+          res.write(JSON.stringify({
+            error: "Incorect Password",
+            meta: {
+              version: edb.remote.server.version,
+              offical: edb.remote.server.offical
+            }
+          }))
+          res.end()
+        }
         if (body.type === 'online') {
+          res.writeHead(200)
           res.write(JSON.stringify({
             type: "online",
             'data': true,
@@ -144,6 +187,7 @@ class RemoteServer {
             }
           }))
         } else if (body.type === 'get') {
+          res.writeHead(200)
           res.write(JSON.stringify({
             type: "get",
             'data': db.get(body.key),
@@ -153,6 +197,7 @@ class RemoteServer {
             }
           }))
         } else if (body.type === 'set') {
+          res.writeHead(200)
           res.write(JSON.stringify({
             type: "set",
             'data': db.set(body.key, body.value),
@@ -162,6 +207,7 @@ class RemoteServer {
             }
           }))
         } else if (body.type === 'delete') {
+          res.writeHead(200)
           res.write(JSON.stringify({
             type: "delete",
             'data': db.del(body.value),
@@ -171,6 +217,7 @@ class RemoteServer {
             }
           }))
         } else if (body.type === 'has') {
+          res.writeHead(200)
           res.write(JSON.stringify({
             type: "has",
             'data': db.has(body.value),
@@ -180,6 +227,7 @@ class RemoteServer {
             }
           }))
         } else if (body.type === 'keys') {
+          res.writeHead(200)
           res.write(JSON.stringify({
             type: "keys",
             'data': db.keys(),
@@ -189,6 +237,7 @@ class RemoteServer {
             }
           }))
         } else if (body.type === 'getAll') {
+          res.writeHead(200)
           res.write(JSON.stringify({
             type: "getAll",
             'data': db.getAll(),
@@ -198,9 +247,20 @@ class RemoteServer {
             }
           }))
         } else if (body.type === 'setAll') {
+          res.writeHead(200)
           db.setAll(body.value)
           res.write(JSON.stringify({
             type: "setAll",
+            'data': {},
+            meta: {
+              version: edb.remote.server.version,
+              offical: edb.remote.server.offical
+            }
+          }))
+        } else {
+          res.writeHead(404)
+          res.write(JSON.stringify({
+            type: "unknown",
             'data': {},
             meta: {
               version: edb.remote.server.version,
@@ -228,6 +288,26 @@ class RemoteServer {
   debugPrint() {
     console.table(this)
   }
+
+  handlePassword(password) {
+    if (this.settings?.password !== undefined) {
+      return true
+    }
+
+    if (password === undefined) {
+      return false
+    }
+
+    if (password === '') {
+      return false
+    }
+
+    if (this.password !== password) {
+      return false
+    }
+
+    return true
+  }
 }
 
 class RemoteClient {
@@ -239,13 +319,15 @@ class RemoteClient {
     } else {
       this.reqfunc = this.reqfunc
     }
+    this.password = settings?.password
     this.verifyServer()
   }
 
   async checkServerStatus() {
     try {
       return await this.reqfunc(this.server, {
-        "type": "online"
+        "type": "online",
+        "password": this.password
       })['data']
     } catch (error) {
       logs.append('Client Error: ' + error)
@@ -263,7 +345,8 @@ class RemoteClient {
     try {
       return JSON.parse(await this.reqfunc(this.server, {
         "type": 'get',
-        "key": key
+        "key": key,
+        "password": this.password
       }))['data']
     } catch (error) {
       logs.append('Client Error: ' + error)
@@ -276,7 +359,8 @@ class RemoteClient {
       return await JSON.parse(this.reqfunc(this.server, {
         "type": 'set',
         "key": key,
-        "value": value
+        "value": value,
+        "password": this.password
       }))['data']
     } catch (error) {
       logs.append('Client Error: ' + error)
@@ -288,7 +372,8 @@ class RemoteClient {
     try {
       return await JSON.parse(this.reqfunc(this.server, {
         "type": 'delete',
-        "key": key
+        "key": key,
+        "password": this.password
       }))['data']
     } catch (error) {
       logs.append('Client Error: ' + error)
@@ -300,7 +385,8 @@ class RemoteClient {
     try {
       return JSON.parse(await this.reqfunc(this.server, {
         "type": 'has',
-        "key": key
+        "key": key,
+        "password": this.password
       }))['data']
     } catch (error) {
       logs.append('Client Error: ' + error)
@@ -311,7 +397,8 @@ class RemoteClient {
   async keys() {
     try {
       return JSON.parse(await this.reqfunc(this.server, {
-        "type": 'keys'
+        "type": 'keys',
+        "password": this.password
       }))['data']
     } catch (error) {
       logs.append('Client Error: ' + error)
@@ -322,7 +409,8 @@ class RemoteClient {
   async getAll() {
     try {
       return JSON.parse(await this.reqfunc(this.server, {
-        "type": 'getAll'
+        "type": 'getAll',
+        "password": this.password
       }))['data']
     } catch (error) {
       logs.append('Client Error: ' + error)
@@ -334,7 +422,8 @@ class RemoteClient {
     try {
       return await JSON.parse(this.reqfunc(this.server, {
         "type": 'setAll',
-        "value": data
+        "value": data,
+        "password": this.password
       }))['data']
     } catch (error) {
       logs.append('Client Error: ' + error)

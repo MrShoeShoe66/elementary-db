@@ -24,7 +24,7 @@ function getContent(filename) {
   const file = fs.readFileSync(filename, 'utf8');
   const formatedFile = file
     .replace(/(\r\n\t|\n|\r\t)/gm,'')
-    .replace(/}{/g, '},{');
+    .replace(/}{/g, '},{')
   const fileJson = JSON.parse(formatedFile)
   return fileJson
 }

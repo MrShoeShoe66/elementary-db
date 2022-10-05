@@ -1,5 +1,5 @@
-const http = require('http');
-const https = require('https');
+const http = require('http')
+const https = require('https')
 
 module.exports = {}
 

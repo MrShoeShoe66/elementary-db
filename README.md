@@ -4,7 +4,7 @@ A not so baisc json database system for Node.js including a method for Encryptio
 
 Developed By [MrShoe_](https://github.com/MrShoeShoe66/)
 
-VERSION: v3.1.1
+VERSION: v3.1.2
 
 # Install
 
@@ -224,6 +224,16 @@ const server = new Database.remote('<SERVER-IP>', { secure: true })
 
 And as a note, it's considered secured here when its through https trafic instead of http trafic, and it can either be secured through the package itself or through another routeing softwhere! Just thought I should clarify 
 
+##### Settings Options
+
+ - secure
+  - Is the server run with https?
+  - Values:
+    - true/false
+ - password
+  - Password for database
+  - Simple text value
+
 ### Server 
 
 Creating a server is the easy part, here is how you do it
@@ -231,7 +241,7 @@ Creating a server is the easy part, here is how you do it
 ```js
 const Database = require('elementary-db')
 
-const server = new Database.remote.server()
+const server = new Database.remote.server({ settings })
 ```
 
 And to start the server simply use this command
@@ -253,6 +263,16 @@ elementary-db database server running at ip of: 127.0.0.1
 ```
 
 and the ip is used to connect to the server from the client
+
+#### Settings
+
+Currently, the only availible setting is a password, herw is how yout set it up
+
+```js
+const server = new Database.remote.server({
+  password: 'Password'
+})
+```
 
 #### Make it secure!
 

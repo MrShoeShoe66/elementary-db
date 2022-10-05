@@ -2,7 +2,7 @@
   "name": "elementary-db",
   "description": "A not so basic json database, with built in encryption and a remote server ability",
   "author": "MrShoe_",
-  "version": "3.1.1",
+  "version": "3.1.2",
   "main": "index.js",
   "license": "MIT",
   "homepage": "https://github.com/MrShoeShoe66/elementary-db",
