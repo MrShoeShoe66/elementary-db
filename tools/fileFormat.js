@@ -1,4 +1,4 @@
-const edbConfig = require('./edb')
+const edbConfig = require('../edb')
 const fs = require('fs')
 
 function getContent(filename) {

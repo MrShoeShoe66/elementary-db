@@ -1,5 +1,5 @@
 module.exports              =       {}
-module.exports.version      =       'v3.1.3'
+module.exports.version      =       'v3.1.4'
 module.exports.extenion     =       '.edb'
 module.exports.remote       =       {
     client: {
