@@ -4,7 +4,7 @@ A not so baisc json database system for Node.js including a method for Encryptio
 
 Developed By [MrShoe_](https://github.com/MrShoeShoe66/)
 
-VERSION: v3.1.2
+VERSION: v3.1.3
 
 # Install
 
