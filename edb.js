@@ -1,5 +1,5 @@
 module.exports              =       {}
-module.exports.version      =       'v3.1.4'
+module.exports.version      =       'v3.1.5'
 module.exports.extenion     =       '.edb'
 module.exports.remote       =       {
     client: {
@@ -8,7 +8,7 @@ module.exports.remote       =       {
     },
     server: {
         offical: true,
-        version: "v1.2.0"
+        version: "v1.2.1"
     },
     logs: "./edblogs.txt"
 }
