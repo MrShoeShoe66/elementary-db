@@ -1,1 +1,0 @@
-const Database = require('./index')
